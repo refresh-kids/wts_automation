@@ -1,0 +1,14 @@
+{
+  "autoReply": {
+    "enabled": true,
+    "keywords": {
+      "ping": "pong",
+      "hello": "Hi there! How can I help you?",
+      "help": "Available commands: ping, hello, help"
+    }
+  },
+  "settings": {
+    "logMessages": true,
+    "headless": true
+  }
+}

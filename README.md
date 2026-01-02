@@ -64,43 +64,75 @@ node examples.js
 
 ### Main Functions
 
-#### `sendMessage(phoneNumber, message)`
+All utility functions require the client instance to be passed as the first parameter.
+
+#### `sendMessage(client, phoneNumber, message)`
 Send a message to a specific phone number.
 
 ```javascript
+const client = require('./index');
 const { sendMessage } = require('./utils');
 
-// Phone number format: country code + number (no + or spaces)
-await sendMessage('1234567890', 'Hello from automation!');
+// Wait for client to be ready
+client.on('ready', async () => {
+    // Phone number format: country code + number (no + or spaces)
+    await sendMessage(client, '1234567890', 'Hello from automation!');
+});
 ```
 
-#### `sendGroupMessage(groupId, message)`
+#### `sendGroupMessage(client, groupId, message)`
 Send a message to a WhatsApp group.
 
 ```javascript
+const client = require('./index');
 const { sendGroupMessage } = require('./utils');
 
-await sendGroupMessage('groupId@g.us', 'Hello group!');
+client.on('ready', async () => {
+    await sendGroupMessage(client, 'groupId@g.us', 'Hello group!');
+});
 ```
 
-#### `getChats()`
+#### `getChats(client)`
 Retrieve all chats.
 
 ```javascript
+const client = require('./index');
 const { getChats } = require('./utils');
 
-const chats = await getChats();
-console.log(`Total chats: ${chats.length}`);
+client.on('ready', async () => {
+    const chats = await getChats(client);
+    console.log(`Total chats: ${chats.length}`);
+});
 ```
 
-#### `getContacts()`
+#### `getContacts(client)`
 Retrieve all contacts.
 
 ```javascript
+const client = require('./index');
 const { getContacts } = require('./utils');
 
-const contacts = await getContacts();
-console.log(`Total contacts: ${contacts.length}`);
+client.on('ready', async () => {
+    const contacts = await getContacts(client);
+    console.log(`Total contacts: ${contacts.length}`);
+});
+```
+
+#### Alternative: Using createUtils Factory
+
+You can also create a utilities object bound to a specific client:
+
+```javascript
+const client = require('./index');
+const { createUtils } = require('./utils');
+
+client.on('ready', async () => {
+    const utils = createUtils(client);
+    
+    // Now you can use utilities without passing client each time
+    await utils.sendMessage('1234567890', 'Hello!');
+    const chats = await utils.getChats();
+});
 ```
 
 ## Event Handlers

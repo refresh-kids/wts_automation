@@ -20,7 +20,7 @@ function scheduleMessage(phoneNumber, message, scheduledTime) {
     console.log(`Will be sent in ${Math.round(delay / 1000)} seconds`);
     
     setTimeout(async () => {
-        await sendMessage(phoneNumber, message);
+        await sendMessage(client, phoneNumber, message);
         console.log('Scheduled message sent!');
     }, delay);
 }
@@ -50,7 +50,7 @@ async function broadcastMessage(phoneNumbers, message, delayBetweenMessages = 2)
         console.log(`Sending to ${phoneNumber} (${i + 1}/${phoneNumbers.length})`);
         
         try {
-            await sendMessage(phoneNumber, message);
+            await sendMessage(client, phoneNumber, message);
             
             // Add delay between messages to avoid rate limiting
             if (i < phoneNumbers.length - 1) {

@@ -20,8 +20,13 @@ function scheduleMessage(phoneNumber, message, scheduledTime) {
     console.log(`Will be sent in ${Math.round(delay / 1000)} seconds`);
     
     setTimeout(async () => {
-        await sendMessage(client, phoneNumber, message);
-        console.log('Scheduled message sent!');
+        // Check if client is still ready before sending
+        if (client.info) {
+            await sendMessage(client, phoneNumber, message);
+            console.log('Scheduled message sent!');
+        } else {
+            console.error('Client not ready. Scheduled message cancelled.');
+        }
     }, delay);
 }
 

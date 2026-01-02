@@ -9,12 +9,14 @@
 /**
  * Send a message to a specific phone number
  * @param {Object} client - WhatsApp client instance
- * @param {string} phoneNumber - Phone number in format: countrycode+number (e.g., '1234567890')
+ * @param {string} phoneNumber - Phone number in international format without + or spaces
+ *                                (e.g., '1234567890' where 1 is country code and 234567890 is the number)
+ *                                For US number (123) 456-7890, use: '11234567890'
  * @param {string} message - Message text to send
  */
 async function sendMessage(client, phoneNumber, message) {
     try {
-        // Format: countrycode + number + @c.us
+        // Format: countrycode + number + @c.us (no + sign or spaces in phoneNumber)
         const chatId = `${phoneNumber}@c.us`;
         await client.sendMessage(chatId, message);
         console.log(`Message sent to ${phoneNumber}: ${message}`);
